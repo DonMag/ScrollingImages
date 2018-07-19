@@ -16,6 +16,27 @@
 
 @implementation ViewController
 
+- (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+	
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+	
+	// execute before rotation
+	
+	// get the "index" of the current image in the scroll view
+	NSUInteger idx = (unsigned)(_theScrollView.contentOffset.x / _theScrollView.frame.size.width);
+	
+	[coordinator animateAlongsideTransition:^(id  _Nonnull context) {
+		// execute during rotation
+		
+		// update the scroll view's contentOffset, based on the "index"
+		self.theScrollView.contentOffset = CGPointMake(idx * self.theScrollView.frame.size.width, 0);
+		
+	} completion:^(id  _Nonnull context) {
+		// execute after rotation (if additional code wanted)
+	}];
+
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
